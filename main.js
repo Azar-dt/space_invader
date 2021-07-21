@@ -21,6 +21,9 @@ const meteor_img = new Image(40,40);
 const item_bullet_img = new Image(30,30); 
 const item_health_img = new Image(30,30); 
 const item_bullet_speed_img = new Image(30,30); 
+const life_img = new Image(20,20); 
+const level_img = new Image(30,30); 
+const score_img = new Image(20,20); 
 
 player_ship_img.src = './icon_object/ship_red.png'; 
 enemy_bullet_img.src = './icon_object/enemy_bullet1.png'; 
@@ -31,6 +34,9 @@ meteor_img.src = './icon_object/meteor_3_edit.png';
 item_bullet_img.src = './icon_object/plus_bullet.png'; 
 item_health_img.src = './icon_object/plus_life1.png'; 
 item_bullet_speed_img.src = './icon_object/plus_bullet_speed.png'; 
+life_img.src = './icon_object/life.png'; 
+level_img.src = './icon_object/level1.png'; 
+score_img.src = './icon_object/score.png'; 
 
 const defaulLife = 15; 
 let LIFE = defaulLife; 
@@ -98,9 +104,12 @@ let enemy_bullet = [];
 function showStats() { 
     ctx.fillStyle = '#fff'; 
     ctx.font = "13px Arial"; 
-    ctx.fillText('LIFE : ' + LIFE, 20, 20); 
-    ctx.fillText('LEVEL : ' + LEVEL, canvas.width/2 - 30, 20);
-    ctx.fillText('SCORE : ' + SCORE, canvas.width - 100, 20);
+    ctx.drawImage(life_img, 20, 5, life_img.width, life_img.height); 
+    ctx.fillText('x '+LIFE, 45, 20); 
+    ctx.drawImage(level_img, canvas.width/2 - 20, 0, level_img.width , level_img.height);
+    ctx.fillText(LEVEL, canvas.width/2 + 15 , 20);
+    ctx.drawImage(score_img, canvas.width - 75, 5, score_img.width, score_img.height); 
+    ctx.fillText(SCORE, canvas.width - 50, 20);
 }
 
 let fps, fpsInterval, startTime, now, then, elapsed;
@@ -151,7 +160,7 @@ function createNewGame() {
 
     showStats();  
 }
-createNewGame(); 
+// createNewGame(); 
 
 function animate() { 
     ctx.clearRect(0, 0, canvas.width, canvas.height); 
@@ -165,12 +174,14 @@ function animate() {
     handleEnemyShip(); 
     handleEnemyBullets();
     handleItem();  
-    if (LEVEL % 2 == 0) handleMeteor(); 
+    handleMeteor(); 
+
     handleFireParticle(); 
     hue += 0.8; 
     frame ++; 
     if (frame > 98) frame = 0; 
-    if (frame % meteor_per_sec === 0)   addMeteor(); 
+    if (frame % meteor_per_sec === 0 && LEVEL % 2 == 0) addMeteor();
+
     if (frame % Math.floor(100 / player_bullet_per_sec) === 0) { 
         addPlayerBullet();
         for(let i = 0; i < enemyStats.row; i++) {
@@ -195,6 +206,7 @@ function isGameOver() {
         || document.getElementById('btn').clicked === true
     ) { 
         canvas.style.cursor = 'default';
+        showStats();
         let temp = document.getElementById('name1').value;
         let NAME = temp.toUpperCase(); ; 
         let alertmsg1 = "😵GAME OVER !!!😵" ;
