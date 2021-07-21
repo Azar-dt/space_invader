@@ -32,7 +32,7 @@ item_bullet_img.src = './icon_object/plus_bullet.png';
 item_health_img.src = './icon_object/plus_life1.png'; 
 item_bullet_speed_img.src = './icon_object/plus_bullet_speed.png'; 
 
-const defaulLife = 1000; 
+const defaulLife = 15; 
 let LIFE = defaulLife; 
 
 let LEVEL = 1; 
