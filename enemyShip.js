@@ -18,6 +18,9 @@ class enemyShip {
             ) { 
                 this.life --; 
                 if (this.life == 0) { 
+                    explosion_sound.currentTime = 0; 
+                    explosion_sound.volume = 0.01; 
+                    explosion_sound.play(); 
                     this.status = false; 
                     SCORE += 10; 
                     let temp ; 
@@ -26,6 +29,8 @@ class enemyShip {
                     let type = Math.floor(Math.random() * 3 + 1); 
                     if (temp === 0)  
                     addNewItem(this.x + enemyStats.width/2, this.y + enemyStats.height/2, type); 
+                   // explosion_sound.pause(); 
+                
                 } 
                 player_bullet.splice(i,1); 
                 i--; 
@@ -76,9 +81,6 @@ function handleEnemyShip() {
                 enemy[i][j].update(); 
                 enemy[i][j].draw(); 
             }
-            // if (enemy[i][j].item) { 
-            //     addNewItem(enemy[i][j].x + enemyStats.width/2, enemy[i][j].y + enemyStats.height/2); 
-            // }
         }
     }
     let next_level = true; 
@@ -88,16 +90,16 @@ function handleEnemyShip() {
         }
     }
     if (next_level) { 
-        // window.cancelAnimationFrame(loop); 
+        //bg_sound.currentTime = 0; 
+        //bg_sound.play(); 
         LEVEL ++;
         
-        enemySpeed = Math.max(enemySpeed - 0.1, 0.8); 
+        //enemySpeed = Math.max(enemySpeed - 0.1, 0.8); 
         // player_bullet_per_sec += 1.5; 
         enemy_bullet_speed += 0.15 * DIFFICULTY;
-        meteor_per_sec -= 2; 
+        meteor_per_sec -= 3 * DIFFICULTY; 
         console.log(enemySpeed); 
         enemyStats.row = Math.min(4, enemyStats.row + 1); 
         createEnemyShips(); 
-        // startAnimating(player_bullet_per_sec); 
     }
 }

@@ -38,6 +38,20 @@ life_img.src = './icon_object/life.png';
 level_img.src = './icon_object/level1.png'; 
 score_img.src = './icon_object/score.png'; 
 
+const game_over_sound = new Audio(); 
+const explosion_sound = new Audio();
+const get_item_sound = new Audio();  
+const get_hit_sound = new Audio(); 
+const bg_sound = new Audio(); 
+const shot_sound = new Audio(); 
+
+game_over_sound.src = './sound_effects/fast-game-over.wav'; 
+explosion_sound.src = './sound_effects/explosion.wav';
+get_item_sound.src = './sound_effects/get-item.wav';
+get_hit_sound.src = './sound_effects/get-hit.wav';
+bg_sound.src = './sound_effects/bg-sound.wav'; 
+shot_sound.src = './sound_effects/retro-shots.wav'; 
+
 const defaulLife = 15; 
 let LIFE = defaulLife; 
 
@@ -195,6 +209,12 @@ function animate() {
             } 
         }
     } 
+    if (frame % Math.floor(100 / 10) === 0) { 
+        shot_sound.currentTime = 0; 
+        shot_sound.volume = 0.002; 
+        shot_sound.play(); 
+    } 
+    
     isGameOver(); 
     if (isGameOver()) return; 
     loop = requestAnimationFrame(animate); 
@@ -205,6 +225,8 @@ function isGameOver() {
         LIFE < 1
         || document.getElementById('btn').clicked === true
     ) { 
+        shot_sound.volume = 0; 
+        game_over_sound.play(); 
         canvas.style.cursor = 'default';
         showStats();
         let temp = document.getElementById('name1').value;

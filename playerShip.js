@@ -14,6 +14,8 @@ class playerShip {
                 && enemy_bullet[i].y + bullet.height/2  < this.y + player_ship_img_size.height/2 
                 && enemy_bullet[i].y - bullet.height/2 > this.y - player_ship_img_size.height/2 
             ) { 
+                get_hit_sound.currentTime = 0; 
+                get_hit_sound.play(); 
                 LIFE --;  
                 enemy_bullet.splice(i,1); 
                 i--; 
@@ -27,6 +29,8 @@ class playerShip {
                 && meteor[i].y + meteor_img.height/2  < this.y + player_ship_img_size.height/2 
                 && meteor[i].y - meteor_img.height/2 > this.y - player_ship_img_size.height/2 
             ) { 
+                get_hit_sound.currentTime = 0; 
+                get_hit_sound.play(); 
                 LIFE --;  
                 meteor.splice(i,1); 
                 i--; 
@@ -40,6 +44,8 @@ class playerShip {
                 && item[i].y + item_bullet_img.height/2  < this.y + player_ship_img_size.height/2 
                 && item[i].y - item_bullet_img.height/2 > this.y - player_ship_img_size.height/2 
             ) { 
+                get_item_sound.currentTime = 0; 
+                get_item_sound.play(); 
                 if (item[i].type === 1) { 
                     this.numbullet = Math.min(this.numbullet + 1, 3); 
                 }

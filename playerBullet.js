@@ -38,6 +38,7 @@ function addPlayerBullet() {
         player_bullet.push(new playerBullet(player.x, player.y, player.numbullet)); 
         player_bullet.push(new playerBullet(player.x + bullet.width * 1.5, player.y, player.numbullet)); 
     }
+    
 }
 
 function handlePlayerBullets() { 
