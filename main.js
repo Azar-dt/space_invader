@@ -24,6 +24,7 @@ const item_bullet_speed_img = new Image(30,30);
 const life_img = new Image(20,20); 
 const level_img = new Image(30,30); 
 const score_img = new Image(20,20); 
+const explosion_img = new Image(); 
 
 player_ship_img.src = './icon_object/ship_red.png'; 
 enemy_bullet_img.src = './icon_object/enemy_bullet1.png'; 
@@ -37,6 +38,7 @@ item_bullet_speed_img.src = './icon_object/plus_bullet_speed.png';
 life_img.src = './icon_object/life.png'; 
 level_img.src = './icon_object/level1.png'; 
 score_img.src = './icon_object/score.png'; 
+explosion_img.src = './icon_object/explosion.png'; 
 
 const game_over_sound = new Audio(); 
 const explosion_sound = new Audio();
@@ -126,7 +128,7 @@ function showStats() {
     ctx.fillText(SCORE, canvas.width - 50, 20);
 }
 
-let fps, fpsInterval, startTime, now, then, elapsed;
+let explosionArr = []; 
 let loop; 
 let frame = 0; 
 
@@ -145,6 +147,10 @@ function clearBullets() {
     }
     for (let i = 0; i < fire.length; i++) { 
         fire.splice(i,1);
+        i--;
+    }
+    for (let i = 0; i < meteor.length; i++) { 
+        meteor.splice(i,1);
         i--;
     }
 }
@@ -180,7 +186,8 @@ function animate() {
     ctx.clearRect(0, 0, canvas.width, canvas.height); 
     drawBackground(); 
     //ctx.drawImage(meteor_img,canvas.width/2,canvas.height/2, meteor_img.width, meteor_img.height); 
-
+    frame ++; 
+    if (frame > 99) frame = 0; 
     showStats(); 
     player.update(); 
     player.draw(); 
@@ -189,11 +196,10 @@ function animate() {
     handleEnemyBullets();
     handleItem();  
     handleMeteor(); 
-
+    handleExplosionDraw(); 
     handleFireParticle(); 
     hue += 0.8; 
-    frame ++; 
-    if (frame > 98) frame = 0; 
+   
     if (frame % meteor_per_sec === 0 && LEVEL % 2 == 0) addMeteor();
 
     if (frame % Math.floor(100 / player_bullet_per_sec) === 0) { 
@@ -246,7 +252,6 @@ btn.addEventListener("click", function() {
     window.cancelAnimationFrame(loop); 
     createNewGame(); 
     canvas.style.cursor = 'none'; 
-    animate(); 
-    
+    animate();   
 })
 

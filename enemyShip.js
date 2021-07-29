@@ -29,6 +29,7 @@ class enemyShip {
                     let type = Math.floor(Math.random() * 3 + 1); 
                     if (temp === 0)  
                     addNewItem(this.x + enemyStats.width/2, this.y + enemyStats.height/2, type); 
+                    addNewExplosionDraw(this.x + enemyStats.width/2, this.y + enemyStats.height/2); 
                    // explosion_sound.pause(); 
                 
                 } 
@@ -44,6 +45,7 @@ class enemyShip {
             && player.y  < this.y + enemyStats.height 
             && player.y + player_ship_img_size.height > this.y 
         ) { 
+            addNewExplosionDraw(this.x + enemyStats.width/2, this.y + enemyStats.height/2); 
             this.status = false; 
             LIFE --; 
         }
